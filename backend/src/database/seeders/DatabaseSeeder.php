@@ -15,11 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        Post::factory(50)->create();
+
+        Like::factory(200)->make()->each(function ($like) {
+            DB::table('likes')->insertOrIgnore($like->toArray());
+        });
+
+
+        Comment::factory(200)->create();
+
+
     }
 }

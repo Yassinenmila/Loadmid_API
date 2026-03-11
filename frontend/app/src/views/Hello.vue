@@ -1,35 +1,34 @@
 <template>
   <div>
-    <h1>Message depuis Laravel :</h1>
-    <p>{{ message }}</p>
-    <button @click="fetchHello">Rafraîchir</button>
+    <h1>Message depuis JSONPlaceholder :</h1>
+    <p class="text-blue-700">{{ todo.title }}</p>
+    <button @click="fetchTodo">Rafraîchir</button>
   </div>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue'
-import { getHello } from '../services/api'
+import axios from 'axios'
 
 export default {
   setup() {
-    const message = ref('') // variable réactive pour stocker le message
+    const todo = ref({ title: '' }) // variable réactive
 
-    // Fonction pour récupérer le message depuis l'API
-    const fetchHello = async () => {
+    const fetchTodo = async () => {
       try {
-        const response = await getHello()
-        message.value = response.data.message // récupère le message
+        const response = await axios.get('https://jsonplaceholder.typicode.com/todos/4')
+        todo.value = response.data
       } catch (error) {
         console.error('Erreur API:', error)
-        message.value = 'Impossible de récupérer le message'
+        todo.value = { title: 'Impossible de récupérer les données' }
       }
     }
 
     onMounted(() => {
-      fetchHello() // récupère le message dès le montage du composant
+      fetchTodo() // récupère les données au montage
     })
 
-    return { message, fetchHello }
+    return { todo, fetchTodo }
   }
 }
 </script>
