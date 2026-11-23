@@ -32,3 +32,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/posts/{post}/like', [LikeController::class, 'toggle']);
 });
 
+Route::get('/', function () {
+    return response()->json(['message' => 'Welcome to the API']);
+});

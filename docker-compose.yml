@@ -26,6 +26,7 @@ services:
     working_dir: /var/www
     volumes:
       - ./frontend/app:/var/www
+      - /var/www/node_modules
     ports:
       - "5173:5173"
     networks:
